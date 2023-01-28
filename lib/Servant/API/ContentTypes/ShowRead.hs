@@ -14,6 +14,7 @@ import Text.Read (readEither)
 
 import Servant.API.ContentTypes
 
+-- | Content type for UTF-8 encoded Show/Read data.
 data ShowRead
 
 instance Accept ShowRead where
