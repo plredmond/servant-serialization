@@ -1,11 +1,11 @@
 name: servant-serialization
 description: Servant content types and instances for common serialization formats.
-version: 0.1.0
+version: 0.2.0
 license: MIT
 maintainer: plredmond
 
 dependencies:
-  - base >= 4.15 && < 4.16
+  - base >= 4.15 && < 4.17
   # web libraries
   - servant
   - http-media
