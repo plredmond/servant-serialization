@@ -3,6 +3,8 @@ description: Servant content types and instances for common serialization format
 version: 0.2.0
 license: MIT
 maintainer: plredmond
+category: Serialization, Servant
+extra-source-files: CHANGELOG.md
 
 dependencies:
   - base >= 4.15 && < 4.17
