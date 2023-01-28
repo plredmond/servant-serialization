@@ -5,7 +5,6 @@ dependencies:
   - base
   # web libraries
   - servant
-  - http-api-data
   - http-media
   # serialization libraries
   - text # serialization of unicode to utf8 bytestrings
@@ -27,8 +26,11 @@ executables:
         ghc-options: -threaded -rtsopts -with-rtsopts=-N
         dependencies:
             - servant-serialization
+            - http-client
             - servant-client
+            - http-api-data
             - servant-server
+            - QuickCheck
             - warp
             - bytestring
             - aeson

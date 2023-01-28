@@ -8,4 +8,5 @@ main = do
     args <- System.Environment.getArgs
     Test.DocTest.doctest
         $ "./lib/"
+        : "./Main.hs"
         : args

@@ -22,7 +22,6 @@ library
     , binary
     , cereal
     , flat
-    , http-api-data
     , http-media
     , persist
     , serialise
@@ -36,13 +35,15 @@ executable example
       Paths_servant_serialization
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      aeson
+      QuickCheck
+    , aeson
     , base
     , binary
     , bytestring
     , cereal
     , flat
     , http-api-data
+    , http-client
     , http-media
     , persist
     , serialise
@@ -67,7 +68,6 @@ test-suite doctest
     , cereal
     , doctest
     , flat
-    , http-api-data
     , http-media
     , persist
     , serialise
