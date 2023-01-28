@@ -14,7 +14,8 @@ import Text.Read (readEither)
 
 import Servant.API.ContentTypes
 
--- | Content type for UTF-8 encoded Show/Read data.
+-- | Content type for UTF-8 encoded data produced by a 'Show' instance and
+-- parsed by a 'Read' instance. This is probably slow.
 data ShowRead
 
 instance Accept ShowRead where
