@@ -1,5 +1,6 @@
 name: servant-serialization
 description: Servant content types and instances for common serialization formats.
+license: MIT
 
 dependencies:
   - base
