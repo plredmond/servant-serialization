@@ -16,18 +16,18 @@ import Servant.API.ContentTypes
 
 -- | Content type for UTF-8 encoded data produced by a 'Show' instance and
 -- parsed by a 'Read' instance. This is probably slow.
-data ShowRead
+data ShowReadCt
 
-instance Accept ShowRead where
+instance Accept ShowReadCt where
     contentTypes Proxy = NonEmpty.fromList
         [ "application" // "x-haskell-showread"
         , "application" // "vnd.haskell.showread"
         ]
 
-instance Show a => MimeRender ShowRead a where
+instance Show a => MimeRender ShowReadCt a where
     mimeRender Proxy = encodeUtf8 . pack . show
 
-instance Read a => MimeUnrender ShowRead a where
+instance Read a => MimeUnrender ShowReadCt a where
     mimeUnrender Proxy = readEither . unpack <=< mapLeft show . decodeUtf8'
       where
         mapLeft f = either (Left . f) Right

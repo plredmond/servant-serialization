@@ -20,7 +20,7 @@ import qualified Data.Binary as Binary (Binary)
 import Servant.API
 import Servant.Server
 import Servant.API.ContentTypes.ShowRead
-import Servant.API.ContentTypes.BinaryPkg
+import Servant.API.ContentTypes.Binary
 
 import Servant.Client
 import Network.HTTP.Client (Manager)
@@ -50,8 +50,8 @@ type TestAPI a
     :<|> "urlenc"   :> ReqBody '[FormUrlEncoded] a              :> Post '[FormUrlEncoded] a
     :<|> "json"     :> ReqBody '[JSON] a                        :> Post '[JSON] a
     -- additional serialization
-    :<|> "show"     :> ReqBody '[ShowRead] a                    :> Post '[ShowRead] a
-    :<|> "binary"   :> ReqBody '[BinaryPkg] a                   :> Post '[BinaryPkg] a
+    :<|> "show"     :> ReqBody '[ShowReadCt] a                  :> Post '[ShowReadCt] a
+    :<|> "binary"   :> ReqBody '[BinaryCt] a                    :> Post '[BinaryCt] a
 
 -- | Client functions
 rtString
