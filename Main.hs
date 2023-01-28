@@ -124,7 +124,7 @@ main
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtCereal   (x :: Example)
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtCBOR     (x :: Example)
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtPersist  (x :: Example)
--- !!!!> \x -> QC.ioProperty $ testRoundTrip mgr rtFlat     (x :: Example)
+-- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtFlat     (x :: Example)
 testRoundTrip :: (Eq a, Show a) => Manager -> (a -> ClientM a) -> a -> IO Bool
 testRoundTrip mgr roundtrip val = do
     let env = mkClientEnv mgr $ BaseUrl Http "localhost" 80801 ""
