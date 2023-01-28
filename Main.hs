@@ -17,12 +17,14 @@ import qualified Web.FormUrlEncoded as UrlEncoded (ToForm, FromForm)
 import qualified Data.Aeson as Aeson (ToJSON, FromJSON)
 import qualified Data.Binary as Binary (Binary)
 import qualified Data.Serialize as Cereal (Serialize)
+import qualified Codec.Serialise as Serialise (Serialise)
 
 import Servant.API
 import Servant.Server
 import Servant.API.ContentTypes.ShowRead
 import Servant.API.ContentTypes.BinaryPkg
 import Servant.API.ContentTypes.Cereal
+import Servant.API.ContentTypes.SerialiseCBOR
 
 import Servant.Client
 import Network.HTTP.Client (Manager)
@@ -44,6 +46,8 @@ instance Binary.Binary Example
 
 instance Cereal.Serialize Example
 
+instance Serialise.Serialise Example
+
 type TestAPI a
     -- string types
     =    "string"   :> ReqBody '[PlainText] String              :> Post '[PlainText] String
@@ -57,6 +61,7 @@ type TestAPI a
     :<|> "showread" :> ReqBody '[ShowRead] a                    :> Post '[ShowRead] a
     :<|> "binary"   :> ReqBody '[BinaryPkg] a                   :> Post '[BinaryPkg] a
     :<|> "cereal"   :> ReqBody '[Cereal] a                      :> Post '[Cereal] a
+    :<|> "cbor"     :> ReqBody '[CBOR] a                        :> Post '[CBOR] a
 
 -- | Client functions
 rtString
@@ -68,6 +73,7 @@ rtString
   :<|> rtShow
   :<|> rtBinary
   :<|> rtCereal
+  :<|> rtCBOR
     = client (Proxy @(TestAPI Example))
 
 main :: IO ()
@@ -75,6 +81,7 @@ main
     = run 80801
     . serve (Proxy @(TestAPI Example))
     $    return
+    :<|> return
     :<|> return
     :<|> return
     :<|> return
@@ -103,6 +110,7 @@ main
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtShow     (x :: Example)
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtBinary   (x :: Example)
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtCereal   (x :: Example)
+-- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtCBOR     (x :: Example)
 testRoundTrip :: (Eq a, Show a) => Manager -> (a -> ClientM a) -> a -> IO Bool
 testRoundTrip mgr roundtrip val = do
     let env = mkClientEnv mgr $ BaseUrl Http "localhost" 80801 ""
