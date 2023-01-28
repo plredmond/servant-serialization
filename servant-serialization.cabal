@@ -32,8 +32,10 @@ executable example
       Paths_servant_serialization
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base
+      aeson
+    , base
     , binary
+    , bytestring
     , cereal
     , flat
     , http-api-data
@@ -43,6 +45,8 @@ executable example
     , servant-client
     , servant-serialization
     , servant-server
+    , text
+    , warp
   default-language: Haskell2010
 
 test-suite doctest

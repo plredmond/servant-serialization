@@ -27,6 +27,10 @@ executables:
             - servant-serialization
             - servant-client
             - servant-server
+            - aeson
+            - bytestring
+            - text
+            - warp
 
 tests:
     doctest:
