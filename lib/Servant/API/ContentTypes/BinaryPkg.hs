@@ -21,11 +21,26 @@ instance Accept BinaryPkg where
         , "application" // "vnd.hackage.binary"
         ]
 
+-- |
+--
+-- >>> mimeRender (Proxy :: Proxy BinaryPkg) (3.14 :: Float)
+-- "\NUL\NUL\200\245\195\255\255\255\255\255\255\255\234"
 instance Binary a => MimeRender BinaryPkg a where
     mimeRender Proxy = encode
 
+-- |
+--
+-- >>> let bsl = mimeRender (Proxy :: Proxy BinaryPkg) (3.14 :: Float)
+-- >>> mimeUnrender (Proxy :: Proxy BinaryPkg) bsl :: Either String Float
+-- Right 3.14
+--
+-- >>> mimeUnrender (Proxy :: Proxy BinaryPkg) (bsl <> "trailing garbage") :: Either String Float
+-- Right 3.14
+--
+-- >>> mimeUnrender (Proxy :: Proxy BinaryPkg) ("preceding garbage" <> bsl) :: Either String Float
+-- Left "Data.Binary.decodeOrFail: not enough bytes"
 instance Binary a => MimeUnrender BinaryPkg a where
     mimeUnrender Proxy bsl =
         case decodeOrFail bsl of
-            Left (_unconsumedInput, _consumedByteCt, err) -> Left err
+            Left (_unconsumedInput, _consumedByteCt, err) -> Left $ "Data.Binary.decodeOrFail: " ++ err
             Right (_unconsumedInput, _consumedByteCt, val) -> Right val
