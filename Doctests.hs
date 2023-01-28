@@ -7,6 +7,6 @@ main :: IO ()
 main = do
     args <- System.Environment.getArgs
     Test.DocTest.doctest
-        $ "./lib/"
-        : "./Main.hs"
+        $ "./Main.hs"
+        : "./lib/"
         : args

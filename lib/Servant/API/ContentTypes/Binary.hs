@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-module Servant.API.ContentTypes.BinaryPkg where
+module Servant.API.ContentTypes.Binary where
 
 import Data.Proxy (Proxy(..))
 import Network.HTTP.Media ((//))
@@ -12,10 +12,10 @@ import Data.Binary
 
 -- | Content-type for instances of the 'Binary' class in the package "binary".
 -- Trailing garbage is ignored.
-data BinaryPkg
+data BinaryFmt
 
 -- | Mime-type using the word "hackage" and the name of the package "binary".
-instance Accept BinaryPkg where
+instance Accept BinaryFmt where
     contentTypes Proxy = NonEmpty.fromList
         [ "application" // "x-hackage-binary"
         , "application" // "vnd.hackage.binary"
@@ -23,23 +23,23 @@ instance Accept BinaryPkg where
 
 -- |
 --
--- >>> mimeRender (Proxy :: Proxy BinaryPkg) (3.14 :: Float)
+-- >>> mimeRender (Proxy :: Proxy BinaryFmt) (3.14 :: Float)
 -- "\NUL\NUL\200\245\195\255\255\255\255\255\255\255\234"
-instance Binary a => MimeRender BinaryPkg a where
+instance Binary a => MimeRender BinaryFmt a where
     mimeRender Proxy = encode
 
 -- |
 --
--- >>> let bsl = mimeRender (Proxy :: Proxy BinaryPkg) (3.14 :: Float)
--- >>> mimeUnrender (Proxy :: Proxy BinaryPkg) bsl :: Either String Float
+-- >>> let bsl = mimeRender (Proxy :: Proxy BinaryFmt) (3.14 :: Float)
+-- >>> mimeUnrender (Proxy :: Proxy BinaryFmt) bsl :: Either String Float
 -- Right 3.14
 --
--- >>> mimeUnrender (Proxy :: Proxy BinaryPkg) (bsl <> "trailing garbage") :: Either String Float
+-- >>> mimeUnrender (Proxy :: Proxy BinaryFmt) (bsl <> "trailing garbage") :: Either String Float
 -- Right 3.14
 --
--- >>> mimeUnrender (Proxy :: Proxy BinaryPkg) ("preceding garbage" <> bsl) :: Either String Float
+-- >>> mimeUnrender (Proxy :: Proxy BinaryFmt) ("preceding garbage" <> bsl) :: Either String Float
 -- Left "Data.Binary.decodeOrFail: not enough bytes at byte-offset 30"
-instance Binary a => MimeUnrender BinaryPkg a where
+instance Binary a => MimeUnrender BinaryFmt a where
     mimeUnrender Proxy bsl =
         case decodeOrFail bsl of
             Left (_unconsumedInput, consumedByteCt, err) -> Left $ "Data.Binary.decodeOrFail: " ++ err ++ " at byte-offset " ++ show consumedByteCt

@@ -16,8 +16,10 @@ extra-source-files:
 
 library
   exposed-modules:
-      Servant.API.ContentTypes.BinaryPkg
+      Servant.API.ContentTypes.Binary
       Servant.API.ContentTypes.Cereal
+      Servant.API.ContentTypes.Flat
+      Servant.API.ContentTypes.Persist
       Servant.API.ContentTypes.SerialiseCBOR
       Servant.API.ContentTypes.ShowRead
   other-modules:
@@ -28,6 +30,7 @@ library
   build-depends:
       base >=4.15 && <4.17
     , binary
+    , bytestring
     , cereal
     , flat
     , http-media
@@ -73,6 +76,7 @@ test-suite doctest
       QuickCheck
     , base >=4.15 && <4.17
     , binary
+    , bytestring
     , cereal
     , doctest
     , flat

@@ -18,13 +18,17 @@ import qualified Data.Aeson as Aeson (ToJSON, FromJSON)
 import qualified Data.Binary as Binary (Binary)
 import qualified Data.Serialize as Cereal (Serialize)
 import qualified Codec.Serialise as Serialise (Serialise)
+import qualified Data.Persist as Persist (Persist)
+import qualified Flat as Flat (Flat)
 
 import Servant.API
 import Servant.Server
 import Servant.API.ContentTypes.ShowRead
-import Servant.API.ContentTypes.BinaryPkg
+import Servant.API.ContentTypes.Binary
 import Servant.API.ContentTypes.Cereal
 import Servant.API.ContentTypes.SerialiseCBOR
+import Servant.API.ContentTypes.Persist
+import Servant.API.ContentTypes.Flat
 
 import Servant.Client
 import Network.HTTP.Client (Manager)
@@ -43,10 +47,12 @@ instance Aeson.FromJSON Example
 instance Aeson.ToJSON Example
 
 instance Binary.Binary Example
-
 instance Cereal.Serialize Example
-
 instance Serialise.Serialise Example
+instance Persist.Persist Example
+instance Flat.Flat Example
+
+instance Flat.Flat Ordering
 
 type TestAPI a
     -- string types
@@ -59,9 +65,11 @@ type TestAPI a
     :<|> "json"     :> ReqBody '[JSON] a                        :> Post '[JSON] a
     -- additional serialization
     :<|> "showread" :> ReqBody '[ShowRead] a                    :> Post '[ShowRead] a
-    :<|> "binary"   :> ReqBody '[BinaryPkg] a                   :> Post '[BinaryPkg] a
-    :<|> "cereal"   :> ReqBody '[Cereal] a                      :> Post '[Cereal] a
+    :<|> "binary"   :> ReqBody '[BinaryFmt] a                   :> Post '[BinaryFmt] a
+    :<|> "cereal"   :> ReqBody '[CerealFmt] a                   :> Post '[CerealFmt] a
     :<|> "cbor"     :> ReqBody '[CBOR] a                        :> Post '[CBOR] a
+    :<|> "persist"  :> ReqBody '[PersistFmt] a                  :> Post '[PersistFmt] a
+    :<|> "flat"     :> ReqBody '[FlatFmt] a                     :> Post '[FlatFmt] a
 
 -- | Client functions
 rtString
@@ -74,6 +82,8 @@ rtString
   :<|> rtBinary
   :<|> rtCereal
   :<|> rtCBOR
+  :<|> rtPersist
+  :<|> rtFlat
     = client (Proxy @(TestAPI Example))
 
 main :: IO ()
@@ -81,6 +91,8 @@ main
     = run 80801
     . serve (Proxy @(TestAPI Example))
     $    return
+    :<|> return
+    :<|> return
     :<|> return
     :<|> return
     :<|> return
@@ -111,6 +123,8 @@ main
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtBinary   (x :: Example)
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtCereal   (x :: Example)
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtCBOR     (x :: Example)
+-- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtPersist  (x :: Example)
+-- !!!!> \x -> QC.ioProperty $ testRoundTrip mgr rtFlat     (x :: Example)
 testRoundTrip :: (Eq a, Show a) => Manager -> (a -> ClientM a) -> a -> IO Bool
 testRoundTrip mgr roundtrip val = do
     let env = mkClientEnv mgr $ BaseUrl Http "localhost" 80801 ""
