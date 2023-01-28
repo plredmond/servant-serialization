@@ -17,6 +17,7 @@ extra-source-files:
 library
   exposed-modules:
       Servant.API.ContentTypes.Binary
+      Servant.API.ContentTypes.Serialize
       Servant.API.ContentTypes.ShowRead
   other-modules:
       Paths_servant_serialization

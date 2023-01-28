@@ -16,11 +16,13 @@ import qualified Data.ByteString.Lazy as BSL
 import qualified Data.Text as T
 import qualified Web.FormUrlEncoded as UrlEncoded (ToForm, FromForm)
 import qualified Data.Binary as Binary (Binary)
+import qualified Data.Serialize as Cereal (Serialize)
 
 import Servant.API
 import Servant.Server
 import Servant.API.ContentTypes.ShowRead
 import Servant.API.ContentTypes.Binary
+import Servant.API.ContentTypes.Serialize
 
 import Servant.Client
 import Network.HTTP.Client (Manager)
@@ -40,6 +42,8 @@ instance Aeson.ToJSON Example
 
 instance Binary.Binary Example
 
+instance Cereal.Serialize Example
+
 type TestAPI a
     -- string types
     =    "string"   :> ReqBody '[PlainText] String              :> Post '[PlainText] String
@@ -52,6 +56,7 @@ type TestAPI a
     -- additional serialization
     :<|> "show"     :> ReqBody '[ShowReadCt] a                  :> Post '[ShowReadCt] a
     :<|> "binary"   :> ReqBody '[BinaryCt] a                    :> Post '[BinaryCt] a
+    :<|> "cereal"   :> ReqBody '[SerializeCt] a                 :> Post '[SerializeCt] a
 
 -- | Client functions
 rtString
@@ -62,6 +67,7 @@ rtString
   :<|> rtJson
   :<|> rtShow
   :<|> rtBinary
+  :<|> rtCereal
     = client (Proxy @(TestAPI Example))
 
 main :: IO ()
@@ -69,6 +75,7 @@ main
     = run 80801
     . serve (Proxy @(TestAPI Example))
     $    return
+    :<|> return
     :<|> return
     :<|> return
     :<|> return
@@ -95,6 +102,7 @@ main
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtJson     (x :: Example)
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtShow     (x :: Example)
 -- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtBinary   (x :: Example)
+-- prop> \x -> QC.ioProperty $ testRoundTrip mgr rtCereal   (x :: Example)
 testRoundTrip :: (Eq a, Show a) => Manager -> (a -> ClientM a) -> a -> IO Bool
 testRoundTrip mgr roundtrip val = do
     let env = mkClientEnv mgr $ BaseUrl Http "localhost" 80801 ""
