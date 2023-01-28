@@ -2,6 +2,7 @@ name: servant-serialization
 description: Servant content types and instances for common serialization formats.
 version: 0.1.0
 license: MIT
+maintainer: plredmond
 
 dependencies:
   - base >= 4.15 && < 4.16

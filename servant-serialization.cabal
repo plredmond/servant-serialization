@@ -7,6 +7,7 @@ cabal-version: 1.12
 name:           servant-serialization
 version:        0.1.0
 description:    Servant content types and instances for common serialization formats.
+maintainer:     plredmond
 license:        MIT
 build-type:     Simple
 
