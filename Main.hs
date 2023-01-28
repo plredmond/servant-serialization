@@ -49,13 +49,14 @@ type TestAPI a
     :<|> "show"     :> ReqBody '[ShowRead] a                    :> Post '[ShowRead] a
 
 -- | Client functions
-(     rtString
- :<|> rtText
- :<|> rtBS
- :<|> rtBSL
- :<|> rtUrlEnc
- :<|> rtJson
- :<|> rtShow ) = client (Proxy @(TestAPI Example))
+rtString
+  :<|> rtText
+  :<|> rtBS
+  :<|> rtBSL
+  :<|> rtUrlEnc
+  :<|> rtJson
+  :<|> rtShow
+    = client (Proxy @(TestAPI Example))
 
 main :: IO ()
 main
