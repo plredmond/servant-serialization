@@ -21,8 +21,8 @@ import qualified Data.Serialize as Cereal (Serialize)
 import Servant.API
 import Servant.Server
 import Servant.API.ContentTypes.ShowRead
-import Servant.API.ContentTypes.Binary
-import Servant.API.ContentTypes.Serialize
+import Servant.API.ContentTypes.BinaryPkg
+import Servant.API.ContentTypes.CerealPkg
 
 import Servant.Client
 import Network.HTTP.Client (Manager)
@@ -56,7 +56,7 @@ type TestAPI a
     -- additional serialization
     :<|> "show"     :> ReqBody '[ShowRead] a                    :> Post '[ShowRead] a
     :<|> "binary"   :> ReqBody '[BinaryPkg] a                   :> Post '[BinaryPkg] a
-    :<|> "cereal"   :> ReqBody '[Cereal] a                      :> Post '[Cereal] a
+    :<|> "cereal"   :> ReqBody '[CerealPkg] a                   :> Post '[CerealPkg] a
 
 -- | Client functions
 rtString

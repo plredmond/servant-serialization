@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-module Servant.API.ContentTypes.Binary where
+module Servant.API.ContentTypes.BinaryPkg where
 
 import Data.Proxy (Proxy(..))
 import Network.HTTP.Media ((//))
