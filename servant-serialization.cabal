@@ -17,7 +17,8 @@ extra-source-files:
 library
   exposed-modules:
       Servant.API.ContentTypes.BinaryPkg
-      Servant.API.ContentTypes.CerealPkg
+      Servant.API.ContentTypes.Cereal
+      Servant.API.ContentTypes.SerialiseCBOR
       Servant.API.ContentTypes.ShowRead
   other-modules:
       Paths_servant_serialization

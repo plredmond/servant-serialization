@@ -10,11 +10,11 @@
 import Data.Proxy (Proxy(..))
 import GHC.Generics (Generic)
 import Network.Wai.Handler.Warp (run)
-import qualified Data.Aeson as Aeson (ToJSON, FromJSON)
+import qualified Data.Text as T
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as BSL
-import qualified Data.Text as T
 import qualified Web.FormUrlEncoded as UrlEncoded (ToForm, FromForm)
+import qualified Data.Aeson as Aeson (ToJSON, FromJSON)
 import qualified Data.Binary as Binary (Binary)
 import qualified Data.Serialize as Cereal (Serialize)
 
@@ -22,7 +22,7 @@ import Servant.API
 import Servant.Server
 import Servant.API.ContentTypes.ShowRead
 import Servant.API.ContentTypes.BinaryPkg
-import Servant.API.ContentTypes.CerealPkg
+import Servant.API.ContentTypes.Cereal
 
 import Servant.Client
 import Network.HTTP.Client (Manager)
@@ -54,9 +54,9 @@ type TestAPI a
     :<|> "urlenc"   :> ReqBody '[FormUrlEncoded] a              :> Post '[FormUrlEncoded] a
     :<|> "json"     :> ReqBody '[JSON] a                        :> Post '[JSON] a
     -- additional serialization
-    :<|> "show"     :> ReqBody '[ShowRead] a                    :> Post '[ShowRead] a
+    :<|> "showread" :> ReqBody '[ShowRead] a                    :> Post '[ShowRead] a
     :<|> "binary"   :> ReqBody '[BinaryPkg] a                   :> Post '[BinaryPkg] a
-    :<|> "cereal"   :> ReqBody '[CerealPkg] a                   :> Post '[CerealPkg] a
+    :<|> "cereal"   :> ReqBody '[Cereal] a                      :> Post '[Cereal] a
 
 -- | Client functions
 rtString

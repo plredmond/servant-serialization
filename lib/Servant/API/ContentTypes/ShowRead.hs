@@ -14,11 +14,11 @@ import Text.Read (readEither)
 
 import Servant.API.ContentTypes
 
--- | Content type for UTF-8 encoded data produced by a 'Show' instance and
--- parsed by a 'Read' instance. This is probably slow.
+-- | Content-type for instances of the 'Show' and 'Read' classes encoded as
+-- UTF-8 data. This is probably slow.
 data ShowRead
 
--- | Mime type using the phrases "haskell" and "showread".
+-- | Mime-type using the phrases "haskell" and "showread".
 instance Accept ShowRead where
     contentTypes Proxy = NonEmpty.fromList
         [ "application" // "x-haskell-showread"

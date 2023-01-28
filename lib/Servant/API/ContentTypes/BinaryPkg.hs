@@ -10,11 +10,11 @@ import qualified Data.List.NonEmpty as NonEmpty
 import Servant.API.ContentTypes
 import Data.Binary
 
--- | Content type for instances of the 'Binary' class. Trailing garbage is
--- ignored.
+-- | Content-type for instances of the 'Binary' class in the package "binary".
+-- Trailing garbage is ignored.
 data BinaryPkg
 
--- | Mime type using the word "hackage" and the name of the package "binary".
+-- | Mime-type using the word "hackage" and the name of the package "binary".
 instance Accept BinaryPkg where
     contentTypes Proxy = NonEmpty.fromList
         [ "application" // "x-hackage-binary"
