@@ -54,9 +54,9 @@ type TestAPI a
     :<|> "urlenc"   :> ReqBody '[FormUrlEncoded] a              :> Post '[FormUrlEncoded] a
     :<|> "json"     :> ReqBody '[JSON] a                        :> Post '[JSON] a
     -- additional serialization
-    :<|> "show"     :> ReqBody '[ShowReadCt] a                  :> Post '[ShowReadCt] a
-    :<|> "binary"   :> ReqBody '[BinaryCt] a                    :> Post '[BinaryCt] a
-    :<|> "cereal"   :> ReqBody '[SerializeCt] a                 :> Post '[SerializeCt] a
+    :<|> "show"     :> ReqBody '[ShowRead] a                    :> Post '[ShowRead] a
+    :<|> "binary"   :> ReqBody '[BinaryPkg] a                   :> Post '[BinaryPkg] a
+    :<|> "cereal"   :> ReqBody '[Cereal] a                      :> Post '[Cereal] a
 
 -- | Client functions
 rtString

@@ -11,17 +11,17 @@ import Servant.API.ContentTypes
 import Data.Serialize
 
 -- | Content type for instances of the 'Serialize' class.
-data SerializeCt
+data Cereal
 
 -- | Mime type using the word "hackage" and the name of the package "cereal".
-instance Accept SerializeCt where
+instance Accept Cereal where
     contentTypes Proxy = NonEmpty.fromList
         [ "application" // "x-hackage-cereal"
         , "application" // "vnd.hackage.cereal"
         ]
 
-instance Serialize a => MimeRender SerializeCt a where
+instance Serialize a => MimeRender Cereal a where
     mimeRender Proxy = encodeLazy
 
-instance Serialize a => MimeUnrender SerializeCt a where
+instance Serialize a => MimeUnrender Cereal a where
     mimeUnrender Proxy = decodeLazy

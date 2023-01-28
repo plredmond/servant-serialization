@@ -12,19 +12,19 @@ import Data.Binary
 
 -- | Content type for instances of the 'Binary' class. Trailing garbage is
 -- ignored.
-data BinaryCt
+data BinaryPkg
 
 -- | Mime type using the word "hackage" and the name of the package "binary".
-instance Accept BinaryCt where
+instance Accept BinaryPkg where
     contentTypes Proxy = NonEmpty.fromList
         [ "application" // "x-hackage-binary"
         , "application" // "vnd.hackage.binary"
         ]
 
-instance Binary a => MimeRender BinaryCt a where
+instance Binary a => MimeRender BinaryPkg a where
     mimeRender Proxy = encode
 
-instance Binary a => MimeUnrender BinaryCt a where
+instance Binary a => MimeUnrender BinaryPkg a where
     mimeUnrender Proxy bsl =
         case decodeOrFail bsl of
             Left (_unconsumedInput, _consumedByteCt, err) -> Left err
