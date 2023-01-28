@@ -41,10 +41,11 @@ instance Show a => MimeRender ShowRead a where
 -- Left "Prelude.read: no parse"
 --
 -- >>> mimeUnrender (Proxy :: Proxy ShowRead) "hello\xc3\x28" :: Either String Double
--- Left "Data.Text.Internal.Encoding.streamDecodeUtf8With: Invalid UTF-8 stream"
+-- Left "Data.Text.Internal.Encoding.streamDecodeUtf8With: Invalid UTF-8 stream: invalid byte-value: 195"
 instance Read a => MimeUnrender ShowRead a where
     mimeUnrender Proxy = readEither . unpack <=< mapLeft prettyErr . decodeUtf8'
       where
         mapLeft f = either (Left . f) Right
-        prettyErr (DecodeError err _invalidByteValMaybe) = err
+        prettyErr (DecodeError err byteVal) =
+            err ++ maybe "" ((": invalid byte-value: " ++) . show) byteVal
         prettyErr _ = "unknown error" -- TODO: when 'text' removes deprecated 'EncodeError' constructor, remove this case

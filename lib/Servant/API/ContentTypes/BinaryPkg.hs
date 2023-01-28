@@ -38,9 +38,9 @@ instance Binary a => MimeRender BinaryPkg a where
 -- Right 3.14
 --
 -- >>> mimeUnrender (Proxy :: Proxy BinaryPkg) ("preceding garbage" <> bsl) :: Either String Float
--- Left "Data.Binary.decodeOrFail: not enough bytes"
+-- Left "Data.Binary.decodeOrFail: not enough bytes at byte-offset 30"
 instance Binary a => MimeUnrender BinaryPkg a where
     mimeUnrender Proxy bsl =
         case decodeOrFail bsl of
-            Left (_unconsumedInput, _consumedByteCt, err) -> Left $ "Data.Binary.decodeOrFail: " ++ err
+            Left (_unconsumedInput, consumedByteCt, err) -> Left $ "Data.Binary.decodeOrFail: " ++ err ++ " at byte-offset " ++ show consumedByteCt
             Right (_unconsumedInput, _consumedByteCt, val) -> Right val

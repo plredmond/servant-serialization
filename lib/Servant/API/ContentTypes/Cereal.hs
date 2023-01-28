@@ -37,6 +37,11 @@ instance Serialize a => MimeRender Cereal a where
 -- >>> mimeUnrender (Proxy :: Proxy Cereal) (bsl <> "trailing garbage") :: Either String Float
 -- Right 3.14
 --
+-- Cereal doesn't detect this preceding garbage.
+--
+-- >>> mimeUnrender (Proxy :: Proxy Cereal) ("preceding garbage" <> bsl) :: Either String Float
+-- Right ...
+--
 -- >>> mimeUnrender (Proxy :: Proxy Cereal) "garbage" :: Either String (Float, Float)
 -- Left "Data.Serialize.decodeLazy: too few bytes\nFrom:\tdemandInput\n\n"
 instance Serialize a => MimeUnrender Cereal a where
