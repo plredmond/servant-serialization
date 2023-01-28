@@ -14,10 +14,11 @@ import Data.Binary
 -- ignored.
 data BinaryCt
 
+-- | Mime type using the word "hackage" and the name of the package "binary".
 instance Accept BinaryCt where
     contentTypes Proxy = NonEmpty.fromList
-        [ "application" // "x-haskell-binary"
-        , "application" // "vnd.haskell.binary"
+        [ "application" // "x-hackage-binary"
+        , "application" // "vnd.hackage.binary"
         ]
 
 instance Binary a => MimeRender BinaryCt a where

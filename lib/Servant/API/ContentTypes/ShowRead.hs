@@ -18,6 +18,7 @@ import Servant.API.ContentTypes
 -- parsed by a 'Read' instance. This is probably slow.
 data ShowReadCt
 
+-- | Mime type using the phrases "haskell" and "showread".
 instance Accept ShowReadCt where
     contentTypes Proxy = NonEmpty.fromList
         [ "application" // "x-haskell-showread"
