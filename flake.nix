@@ -6,14 +6,17 @@
     flake-utils.url = github:numtide/flake-utils;
   };
 
-  outputs = { self, nixpkgs, flake-utils }: flake-utils.lib.eachDefaultSystem (system: {
-    devShell = self.defaultPackage.${system}.envFunc { withHoogle = true; };
-    defaultPackage =
-      let
-        pkgs = import nixpkgs { inherit system; };
-        src = pkgs.nix-gitignore.gitignoreSource [ "*.nix" "result" "build-env" "*.cabal" "dist/" ] ./.;
-        drv = pkgs.haskellPackages.callCabal2nix "servant-serialization" src { };
-      in
-      drv;
-  });
+  outputs = { self, nixpkgs, flake-utils }: flake-utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs { inherit system; };
+      src = pkgs.nix-gitignore.gitignoreSource [ "*.nix" "result" "build-env" "*.cabal" "dist/" ] ./.;
+      drv = pkgs.haskellPackages.callCabal2nix "servant-serialization" src { };
+    in
+    {
+      packages.default = drv; # Can reference with: self.packages.${system}.default;
+      packages.sdistTarball = pkgs.haskell.lib.sdistTarball drv;
+      packages.docsTarball = pkgs.haskell.lib.documentationTarball drv;
+      devShells.default = drv.env;
+      devShells.hoogle = drv.envFunc { withHoogle = true; };
+    });
 }
