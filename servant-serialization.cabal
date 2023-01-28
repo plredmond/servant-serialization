@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           servant-serialization
-version:        0.0.0
+version:        0.1.0
 description:    Servant content types and instances for common serialization formats.
 license:        MIT
 build-type:     Simple
@@ -19,7 +19,7 @@ library
       lib
   ghc-options: -Wall
   build-depends:
-      base
+      base ==4.15.*
     , binary
     , cereal
     , flat
@@ -38,7 +38,7 @@ executable example
   build-depends:
       QuickCheck
     , aeson
-    , base
+    , base ==4.15.*
     , binary
     , bytestring
     , cereal
@@ -64,7 +64,7 @@ test-suite doctest
   ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       QuickCheck
-    , base
+    , base ==4.15.*
     , binary
     , cereal
     , doctest
