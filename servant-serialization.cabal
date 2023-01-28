@@ -13,6 +13,7 @@ build-type:     Simple
 
 library
   exposed-modules:
+      Servant.API.ContentTypes.BinaryPkg
       Servant.API.ContentTypes.ShowRead
   other-modules:
       Paths_servant_serialization
