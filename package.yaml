@@ -6,7 +6,9 @@ dependencies:
   # web libraries
   - servant
   - http-api-data
+  - http-media
   # serialization libraries
+  - text # serialization of unicode to utf8 bytestrings
   - binary
   - cereal
   - serialise
@@ -27,10 +29,9 @@ executables:
             - servant-serialization
             - servant-client
             - servant-server
-            - aeson
-            - bytestring
-            - text
             - warp
+            - bytestring
+            - aeson
 
 tests:
     doctest:

@@ -10,6 +10,8 @@ description:    Servant content types and instances for common serialization for
 build-type:     Simple
 
 library
+  exposed-modules:
+      Servant.API.ContentTypes.ShowRead
   other-modules:
       Paths_servant_serialization
   hs-source-dirs:
@@ -21,9 +23,11 @@ library
     , cereal
     , flat
     , http-api-data
+    , http-media
     , persist
     , serialise
     , servant
+    , text
   default-language: Haskell2010
 
 executable example
@@ -39,6 +43,7 @@ executable example
     , cereal
     , flat
     , http-api-data
+    , http-media
     , persist
     , serialise
     , servant
@@ -63,8 +68,10 @@ test-suite doctest
     , doctest
     , flat
     , http-api-data
+    , http-media
     , persist
     , serialise
     , servant
     , servant-serialization
+    , text
   default-language: Haskell2010

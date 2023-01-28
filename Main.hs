@@ -14,12 +14,13 @@ import qualified Data.Aeson as Aeson (ToJSON, FromJSON)
 
 import Servant.API
 import Servant.Server
+import Servant.API.ContentTypes.ShowRead
 
 data Example = Example
     { slythy :: Bool
     , momeRaths :: [Either Char Ordering]
     , grabe :: Int
-    } deriving (Generic)
+    } deriving (Generic, Show, Read)
 
 instance UrlEncoded.FromForm Example
 instance UrlEncoded.ToForm Example
@@ -36,12 +37,15 @@ type TestAPI a
     -- builtin serialization
     :<|> "urlenc"   :> ReqBody '[FormUrlEncoded] a              :> Post '[FormUrlEncoded] a
     :<|> "json"     :> ReqBody '[JSON] a                        :> Post '[JSON] a
+    -- additional serialization
+    :<|> "show"     :> ReqBody '[ShowRead] a                    :> Post '[ShowRead] a
 
 main :: IO ()
 main
     = run 8080
     . serve (Proxy @(TestAPI Example))
     $    return
+    :<|> return
     :<|> return
     :<|> return
     :<|> return
