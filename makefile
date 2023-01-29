@@ -21,7 +21,6 @@ $(CONFIG_FILE): $(CABAL_FILE)
 
 clean: $(CABAL_FILE)
 	$(SETUP_CMD) clean
-	rm -fv $(CABAL_FILE) result
 
 %.cabal: package.yaml
 	hpack
