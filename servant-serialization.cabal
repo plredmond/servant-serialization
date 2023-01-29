@@ -5,11 +5,11 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           servant-serialization
-version:        0.2.0
+version:        0.2.1
 description:    Servant content types and instances for common serialization formats.
 category:       Serialization, Servant
-bug-reports:    github.com/plredmond/servant-serialization/issues
-maintainer:     recurse.social/@redmp
+bug-reports:    https://github.com/plredmond/servant-serialization/issues
+maintainer:     https://recurse.social/@redmp
 license:        MIT
 build-type:     Simple
 extra-source-files:

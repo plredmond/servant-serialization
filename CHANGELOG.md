@@ -1,3 +1,8 @@
+### 0.2.1
+
+* More cabal fields.
+* Disable flaky test of roundtrip via flat.
+
 ### 0.2.0
 
 * Add changelog, cabal fields.
