@@ -8,7 +8,8 @@ name:           servant-serialization
 version:        0.2.0
 description:    Servant content types and instances for common serialization formats.
 category:       Serialization, Servant
-maintainer:     plredmond
+bug-reports:    github.com/plredmond/servant-serialization/issues
+maintainer:     recurse.social/@redmp
 license:        MIT
 build-type:     Simple
 extra-source-files:
