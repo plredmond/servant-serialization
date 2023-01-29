@@ -9,8 +9,8 @@ version:        0.2.1
 description:    Servant content types and instances for common serialization formats.
 category:       Serialization, Servant
 bug-reports:    https://github.com/plredmond/servant-serialization/issues
-author:         recurse.social/@redmp
-maintainer:     recurse.social/@redmp
+author:         https://recurse.social/@redmp
+maintainer:     https://recurse.social/@redmp
 license:        MIT
 build-type:     Simple
 extra-source-files:
