@@ -1,6 +1,6 @@
 name: servant-serialization
 description: Servant content types and instances for common serialization formats.
-version: 0.2.1
+version: 0.3
 license: MIT
 author: https://recurse.social/@redmp
 category: Serialization, Servant

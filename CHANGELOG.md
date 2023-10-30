@@ -1,3 +1,7 @@
+### 0.3
+
+* Fix a bug where the content types for the serialise package were those of the binary package.
+
 ### 0.2.1
 
 * More cabal fields.

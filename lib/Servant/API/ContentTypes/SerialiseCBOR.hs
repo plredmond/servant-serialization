@@ -19,8 +19,8 @@ data CBOR
 instance Accept CBOR where
     contentTypes Proxy = NonEmpty.fromList
         [ "application" // "cbor"
-        , "application" // "x-hackage-binary"
-        , "application" // "vnd.hackage.binary"
+        , "application" // "x-hackage-serialise"
+        , "application" // "vnd.hackage.serialise"
         ]
 
 -- |
